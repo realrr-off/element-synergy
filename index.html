@@ -8,16 +8,29 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
     :root {
-      --bg: #0f0f13;
-      --bg2: #16161e;
-      --bg3: #1e1e2a;
-      --border: rgba(255,255,255,0.08);
+      --bg:      #0f0f13;
+      --bg2:     #16161e;
+      --bg3:     #1e1e2a;
+      --border:  rgba(255,255,255,0.08);
       --border2: rgba(255,255,255,0.15);
-      --text: #e8e6f0;
-      --text2: #9390a8;
-      --text3: #5e5c72;
-      --radius: 12px;
+      --text:    #e8e6f0;
+      --text2:   #9390a8;
+      --text3:   #5e5c72;
+      --radius:  12px;
       --radius-sm: 8px;
+ 
+      --c-water: #378ADD;
+      --c-fire:  #D85A30;
+      --c-earth: #BA7517;
+      --c-wind:  #1D9E75;
+      --c-dark:  #8B5CF6;
+      --c-light: #D4537E;
+ 
+      --col-strong:  #378ADD;
+      --col-good:    #639922;
+      --col-neutral: #888780;
+      --col-weak:    #E24B4A;
+      --col-warn:    #BA7517;
     }
  
     body {
@@ -27,50 +40,29 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 2rem 1rem;
+      padding: 2rem 1rem 4rem;
     }
  
-    .container {
-      width: 100%;
-      max-width: 720px;
-    }
+    .container { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 14px; }
  
-    /* Header */
-    .header { margin-bottom: 2rem; }
-    .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
-    .header p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+    .header p  { font-size: 13px; color: var(--text2); line-height: 1.7; }
  
-    /* Slot cards */
-    .slots { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-bottom: 1.5rem; }
- 
-    .slot-card {
+    .panel {
       background: var(--bg2);
       border: 0.5px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px;
-      transition: border-color .2s;
+      padding: 1.25rem 1.5rem;
     }
+    .panel-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem; }
+ 
+    /* Slots */
+    .slots { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .slot-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; transition: border-color .2s; }
     .slot-card:hover { border-color: var(--border2); }
- 
-    .slot-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text3);
-      margin-bottom: 6px;
-    }
- 
-    .slot-chosen {
-      font-size: 14px;
-      font-weight: 500;
-      min-height: 22px;
-      margin-bottom: 10px;
-      transition: color .2s;
-    }
- 
+    .slot-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+    .slot-chosen { font-size: 14px; font-weight: 500; min-height: 22px; margin-bottom: 10px; transition: color .2s; }
     .el-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
- 
     .el-btn {
       border: 0.5px solid var(--border);
       border-radius: 6px;
@@ -83,190 +75,178 @@
       transition: all .15s;
       line-height: 1;
     }
-    .el-btn:hover { border-color: var(--border2); transform: scale(1.08); }
+    .el-btn:hover { border-color: var(--border2); transform: scale(1.1); }
     .el-btn.active {
-      border-color: transparent;
-      box-shadow: 0 0 0 1.5px var(--active-color);
-      background: color-mix(in srgb, var(--active-color) 18%, var(--bg3));
-      transform: scale(1.08);
+      border: 1.5px solid var(--active-color, #fff);
+      background: color-mix(in srgb, var(--active-color, #fff) 18%, var(--bg3));
+      transform: scale(1.1);
     }
  
-    /* Synergy panel */
-    .synergy-panel {
-      background: var(--bg2);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1rem;
-    }
- 
+    /* Synergy */
     .syn-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
     .syn-header-label { font-size: 13px; color: var(--text2); }
-    .syn-pct { font-size: 28px; font-weight: 600; transition: color .4s; }
- 
-    .bar-track {
-      height: 6px;
-      background: var(--bg3);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 1.25rem;
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: 3px;
-      transition: width .5s cubic-bezier(.4,0,.2,1), background .5s;
-    }
+    .syn-pct { font-size: 30px; font-weight: 600; transition: color .4s; }
+    .bar-track { height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; margin-bottom: 1.25rem; }
+    .bar-fill { height: 100%; border-radius: 3px; transition: width .5s cubic-bezier(.4,0,.2,1), background .5s; width: 0%; }
  
     .breakdown { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-bottom: 1rem; }
-    .bd-card {
-      background: var(--bg3);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 8px 10px;
-    }
-    .bd-pair { font-size: 11px; color: var(--text3); margin-bottom: 3px; }
+    .bd-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 8px 10px; }
+    .bd-pair   { font-size: 11px; color: var(--text3); margin-bottom: 3px; }
     .bd-result { font-size: 12px; font-weight: 500; }
+    .syn-tip   { font-size: 13px; color: var(--text2); line-height: 1.6; min-height: 40px; }
  
-    .syn-tip { font-size: 13px; color: var(--text2); line-height: 1.6; min-height: 40px; }
- 
-    /* Combat panel */
-    .combat-panel {
-      background: var(--bg2);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-    }
-    .combat-panel h2 { font-size: 13px; font-weight: 500; color: var(--text2); margin-bottom: 1rem; }
- 
+    /* Matchup */
     .matchup-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; margin-bottom: 1rem; }
-    .matchup-cell {
-      border-radius: var(--radius-sm);
-      padding: 8px 10px;
-      background: var(--bg3);
-      border: 0.5px solid var(--border);
-      transition: background .3s, border-color .3s;
-    }
-    .matchup-cell .el-name { font-size: 13px; font-weight: 500; display: block; margin-bottom: 2px; }
-    .matchup-cell .el-status { font-size: 11px; color: var(--text2); }
+    .matchup-cell { background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 8px 10px; transition: background .3s; }
+    .matchup-cell .el-name   { font-size: 13px; font-weight: 500; display: block; margin-bottom: 2px; }
+    .matchup-cell .el-status { font-size: 11px; }
  
     .legend { display: flex; flex-wrap: wrap; gap: 12px; }
     .leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text3); }
-    .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .leg-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
  
-    /* Damage section */
-    .damage-panel {
-      background: var(--bg2);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      margin-top: 1rem;
-    }
-    .damage-panel h2 { font-size: 13px; font-weight: 500; color: var(--text2); margin-bottom: 1rem; }
+    /* Damage grid */
     .dmg-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
-    .dmg-card {
-      background: var(--bg3);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 12px;
-    }
-    .dmg-card .weapon { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
-    .dmg-card .element { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-    .dmg-card .mults { display: flex; flex-direction: column; gap: 3px; }
-    .dmg-card .mult-row { display: flex; justify-content: space-between; font-size: 11px; }
-    .dmg-card .mult-label { color: var(--text2); }
-    .dmg-card .mult-val { font-weight: 500; }
+    .dmg-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+    .dmg-weapon  { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--text3); margin-bottom: 4px; }
+    .dmg-element { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+    .mult-row    { display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 2px 0; }
+    .mult-label  { color: var(--text2); }
+    .mult-val    { font-weight: 600; }
  
-    /* Responsive */
-    @media (max-width: 500px) {
-      .slots { grid-template-columns: 1fr; }
-      .breakdown { grid-template-columns: 1fr; }
+    /* Reference */
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .ref-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px; }
+    .ref-row { font-size: 12px; color: var(--text2); background: var(--bg3); border: 0.5px solid var(--border); border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .ref-beats { color: var(--text3); font-size: 10px; }
+    .ref-loser { font-weight: 500; }
+ 
+    /* Score ref */
+    .score-ref { display: flex; flex-direction: column; gap: 8px; }
+    .score-row { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text2); }
+    .score-badge { font-size: 11px; font-weight: 600; border-radius: 4px; padding: 2px 8px; min-width: 44px; text-align: center; flex-shrink: 0; }
+    .score-note { font-size: 11px; color: var(--text3); border-top: 0.5px solid var(--border); padding-top: 10px; line-height: 1.7; }
+ 
+    @media (max-width: 520px) {
+      .slots, .breakdown, .dmg-grid, .two-col { grid-template-columns: 1fr; }
       .matchup-grid { grid-template-columns: repeat(2, 1fr); }
-      .dmg-grid { grid-template-columns: 1fr; }
+      .ref-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 <div class="container">
+ 
   <div class="header">
     <h1>⚔️ Element Synergy System</h1>
-    <p>Pick an element for each weapon slot. Synergy is calculated from elemental compatibility — matching or feeding elements boost your overall rate, conflicting ones penalise it.</p>
+    <p>Pick an element for each weapon slot. Counter pairs (one beats the other) heavily penalise synergy. Neutral pairs give a medium contribution. Matching elements give full synergy.</p>
   </div>
  
   <div class="slots" id="slots"></div>
  
-  <div class="synergy-panel">
+  <div class="panel">
     <div class="syn-header">
       <span class="syn-header-label">Overall synergy rate</span>
       <span class="syn-pct" id="syn-pct">—</span>
     </div>
-    <div class="bar-track"><div class="bar-fill" id="syn-bar" style="width:0%"></div></div>
+    <div class="bar-track"><div class="bar-fill" id="syn-bar"></div></div>
     <div class="breakdown" id="breakdown"></div>
     <div class="syn-tip" id="syn-tip">Pick an element for each slot to begin.</div>
   </div>
  
-  <div class="combat-panel">
-    <h2>Buff / debuff preview — your loadout vs each enemy element</h2>
+  <div class="panel">
+    <div class="panel-title">Buff / Debuff Preview — your loadout vs each enemy element</div>
     <div class="matchup-grid" id="matchup-grid"></div>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot" style="background:#378ADD"></div> Strong (all 3 beat it)</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#639922"></div> Favoured (2 beat it)</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#888780"></div> Neutral</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#E24B4A"></div> Weak (2+ lose to it)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--col-strong)"></div> Dominant (all 3 beat it)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--col-good)"></div> Favoured (2 beat it)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--col-neutral)"></div> Neutral</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--col-weak)"></div> Weak (2+ lose to it)</div>
     </div>
   </div>
  
-  <div class="damage-panel">
-    <h2>Damage multipliers per weapon</h2>
+  <div class="panel">
+    <div class="panel-title">Damage Multipliers Per Weapon Slot</div>
     <div class="dmg-grid" id="dmg-grid"></div>
   </div>
+ 
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-title">Element Counter Chart</div>
+      <div class="ref-grid" id="ref-grid"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Synergy Score Reference</div>
+      <div class="score-ref">
+        <div class="score-row">
+          <span class="score-badge" style="background:rgba(55,138,221,.18);color:var(--col-strong)">34 pts</span>
+          <span>Same element — perfect harmony</span>
+        </div>
+        <div class="score-row">
+          <span class="score-badge" style="background:rgba(136,135,128,.15);color:var(--col-neutral)">20 pts</span>
+          <span>Neutral — no conflict, no bond</span>
+        </div>
+        <div class="score-row">
+          <span class="score-badge" style="background:rgba(226,75,74,.18);color:var(--col-weak)">5 pts</span>
+          <span>Counter pair — heavy clash</span>
+        </div>
+        <div class="score-note">
+          Max: 34×3 = 102 pts → 100%<br>
+          All same → 100%<br>
+          2 same + 1 counter → ~72%<br>
+          2 same + 1 neutral → ~86%<br>
+          All counters → ~15%
+        </div>
+      </div>
+    </div>
+  </div>
+ 
 </div>
  
 <script>
-  // ── Data ──────────────────────────────────────────────────────────────────
   const ELEMENTS = ['water','fire','earth','wind','dark','light'];
-  const EL_EMOJI  = {water:'💧',fire:'🔥',earth:'🪨',wind:'🌪️',dark:'🌑',light:'✨'};
-  const EL_COLOR  = {water:'#378ADD',fire:'#D85A30',earth:'#BA7517',wind:'#1D9E75',dark:'#8B5CF6',light:'#D4537E'};
+  const EL_EMOJI = { water:'💧', fire:'🔥', earth:'🪨', wind:'🌪️', dark:'🌑', light:'✨' };
+  const EL_HEX   = { water:'#378ADD', fire:'#D85A30', earth:'#BA7517', wind:'#1D9E75', dark:'#8B5CF6', light:'#D4537E' };
  
-  // A beats B → A deals +50% to B, B deals -30% to A
-  const BEATS = {fire:'wind', wind:'earth', earth:'water', water:'fire', light:'dark', dark:'light'};
-  const WEAK_TO = {};
-  Object.entries(BEATS).forEach(([a,b]) => WEAK_TO[b] = a);
+  // Water beats Fire, Fire beats Wind, Wind beats Earth, Earth beats Water
+  // Light beats Dark, Dark beats Light
+  const BEATS = { water:'fire', fire:'wind', wind:'earth', earth:'water', light:'dark', dark:'light' };
  
-  const SLOTS = ['Fist','Sword','Power'];
-  const chosen = [null, null, null];
+  const SCORE_SAME    = 34;
+  const SCORE_NEUTRAL = 20;
+  const SCORE_COUNTER = 5;
+  const SCORE_MAX     = SCORE_SAME * 3; // 102
  
-  // ── Synergy logic ─────────────────────────────────────────────────────────
-  // Pair score: max 34 (same), 23 (compatible), 10 (conflict)
+  const SLOTS   = ['Fist','Sword','Power'];
+  const chosen  = [null, null, null];
+ 
+  function isCounter(a, b) { return BEATS[a] === b || BEATS[b] === a; }
+ 
   function pairScore(a, b) {
     if (!a || !b) return null;
-    if (a === b)               return { score: 34, label: 'same element',  color: '#378ADD' };
-    if (BEATS[a] === b || BEATS[b] === a)
-                               return { score: 23, label: 'compatible',    color: '#639922' };
-    return                            { score: 10, label: 'conflicting',   color: '#E24B4A' };
+    if (a === b)          return { score: SCORE_SAME,    label: 'same element',    color: '#378ADD' };
+    if (isCounter(a, b))  return { score: SCORE_COUNTER, label: 'counter — clash', color: '#E24B4A' };
+    return                       { score: SCORE_NEUTRAL, label: 'neutral',          color: '#888780' };
   }
  
   function calcSynergy(els) {
     const [a, b, c] = els;
     if (!a || !b || !c) return null;
     const pairs = [
-      { name: 'Fist ↔ Sword',  ...pairScore(a, b) },
-      { name: 'Fist ↔ Power',  ...pairScore(a, c) },
-      { name: 'Sword ↔ Power', ...pairScore(b, c) },
+      { name:'Fist ↔ Sword',  ...pairScore(a, b) },
+      { name:'Fist ↔ Power',  ...pairScore(a, c) },
+      { name:'Sword ↔ Power', ...pairScore(b, c) },
     ];
-    const total = pairs.reduce((s, p) => s + p.score, 0);
-    const pct   = Math.round(total / 102 * 100);
-    return { pct, pairs };
+    return { pct: Math.round(pairs.reduce((s,p) => s+p.score, 0) / SCORE_MAX * 100), pairs };
   }
  
-  // Damage multipliers for one weapon element vs one enemy element
-  function getDmgMult(weaponEl, enemyEl) {
-    if (!weaponEl) return null;
-    if (BEATS[weaponEl] === enemyEl) return { mult: 1.5,  label: 'super effective', color: '#378ADD' };
-    if (WEAK_TO[weaponEl] === enemyEl) return { mult: 0.7, label: 'not very effective', color: '#E24B4A' };
-    return { mult: 1.0, label: 'normal', color: '#888780' };
+  function getDmgMult(wEl, eEl) {
+    if (!wEl) return null;
+    if (BEATS[wEl]  === eEl) return { mult: 1.5, color: '#378ADD' };
+    if (BEATS[eEl]  === wEl) return { mult: 0.7, color: '#E24B4A' };
+    return { mult: 1.0, color: '#888780' };
   }
  
-  // ── Render helpers ────────────────────────────────────────────────────────
   function renderSlots() {
     const cont = document.getElementById('slots');
     cont.innerHTML = '';
@@ -276,17 +256,16 @@
       card.className = 'slot-card';
       card.innerHTML = `
         <div class="slot-label">${name}</div>
-        <div class="slot-chosen" style="color:${el ? EL_COLOR[el] : 'var(--text3)'}">
+        <div class="slot-chosen" style="color:${el ? EL_HEX[el] : '#5e5c72'}">
           ${el ? EL_EMOJI[el] + ' ' + el : 'none selected'}
         </div>
         <div class="el-grid" id="eg-${si}"></div>`;
       cont.appendChild(card);
- 
       const grid = document.getElementById(`eg-${si}`);
       ELEMENTS.forEach(e => {
         const btn = document.createElement('button');
         btn.className = 'el-btn' + (el === e ? ' active' : '');
-        btn.style.setProperty('--active-color', EL_COLOR[e]);
+        btn.style.setProperty('--active-color', EL_HEX[e]);
         btn.textContent = EL_EMOJI[e];
         btn.title = e.charAt(0).toUpperCase() + e.slice(1);
         btn.onclick = () => { chosen[si] = e; update(); };
@@ -297,28 +276,22 @@
  
   function renderSynergy() {
     const result = calcSynergy(chosen);
-    const bar    = document.getElementById('syn-bar');
-    const pctEl  = document.getElementById('syn-pct');
-    const bdEl   = document.getElementById('breakdown');
-    const tip    = document.getElementById('syn-tip');
+    const bar   = document.getElementById('syn-bar');
+    const pctEl = document.getElementById('syn-pct');
+    const bdEl  = document.getElementById('breakdown');
+    const tip   = document.getElementById('syn-tip');
  
     if (!result) {
-      pctEl.textContent  = '—';
-      pctEl.style.color  = 'var(--text2)';
-      bar.style.width    = '0%';
-      bar.style.background = 'var(--border2)';
-      bdEl.innerHTML = '';
+      pctEl.textContent = '—'; pctEl.style.color = '#9390a8';
+      bar.style.width = '0%'; bdEl.innerHTML = '';
       tip.textContent = 'Pick an element for each slot to begin.';
       return;
     }
  
     const { pct, pairs } = result;
-    const col = pct >= 85 ? '#378ADD' : pct >= 60 ? '#639922' : pct >= 35 ? '#BA7517' : '#E24B4A';
- 
-    pctEl.textContent   = pct + '%';
-    pctEl.style.color   = col;
-    bar.style.width     = pct + '%';
-    bar.style.background = col;
+    const col = pct >= 90 ? '#378ADD' : pct >= 70 ? '#639922' : pct >= 45 ? '#BA7517' : '#E24B4A';
+    pctEl.textContent = pct + '%'; pctEl.style.color = col;
+    bar.style.width = pct + '%'; bar.style.background = col;
  
     bdEl.innerHTML = pairs.map(p => `
       <div class="bd-card">
@@ -326,41 +299,36 @@
         <div class="bd-result" style="color:${p.color}">${p.label}</div>
       </div>`).join('');
  
-    tip.textContent = pct === 100
-      ? 'Perfect synergy — all three slots share the same element. Maximum power across all attacks.'
-      : pct >= 85 ? 'Excellent synergy — your elements flow into each other strongly.'
-      : pct >= 60 ? 'Good synergy — most pairings are compatible. Minor gaps remain.'
-      : pct >= 35 ? 'Mixed loadout — some elemental conflict. Consider aligning two slots at least.'
-      : 'Clashing elements — your weapons fight each other. Heavy synergy penalty active.';
+    const clashes = pairs.filter(p => p.score === SCORE_COUNTER).length;
+    tip.textContent =
+      pct === 100  ? 'Perfect synergy — all three slots share the same element. Maximum power across every attack.' :
+      clashes === 0 && pct >= 86 ? 'Excellent — two matching slots, one neutral. No conflicts at all.' :
+      clashes === 0 ? 'Clean loadout — no elemental conflicts. Add matching elements to push higher.' :
+      clashes === 1 ? 'One counter pair is dragging synergy down. Swap that slot to remove the clash.' :
+      clashes === 2 ? 'Two counter pairs — heavy conflict. Only one clean pairing remains in your loadout.' :
+      'All three slots counter each other. Near-zero synergy — your weapons actively fight each other.';
   }
  
   function renderMatchup() {
     const grid = document.getElementById('matchup-grid');
     grid.innerHTML = '';
- 
     ELEMENTS.forEach(enemy => {
-      const wins  = chosen.filter(c => c && BEATS[c]  === enemy).length;
-      const loses = chosen.filter(c => c && WEAK_TO[c] === enemy).length;
+      const wins  = chosen.filter(c => c && BEATS[c] === enemy).length;
+      const loses = chosen.filter(c => c && BEATS[enemy] === c).length;
       const hasAny = chosen.some(c => c);
  
       let bg, statusColor, label;
-      if (!hasAny) {
-        bg = 'var(--bg3)'; statusColor = 'var(--text3)'; label = '—';
-      } else if (wins === 3) {
-        bg = 'rgba(55,138,221,.12)'; statusColor = '#378ADD'; label = '▲ Strong ×3';
-      } else if (wins === 2) {
-        bg = 'rgba(99,153,34,.12)'; statusColor = '#639922'; label = '▲ Favoured';
-      } else if (loses >= 2) {
-        bg = 'rgba(226,75,74,.10)'; statusColor = '#E24B4A'; label = '▼ Weak';
-      } else {
-        bg = 'var(--bg3)'; statusColor = '#888780'; label = '● Neutral';
-      }
+      if (!hasAny) { bg=''; statusColor='#5e5c72'; label='—'; }
+      else if (wins === 3) { bg='rgba(55,138,221,.12)';  statusColor='#378ADD'; label='▲ Dominant'; }
+      else if (wins === 2) { bg='rgba(99,153,34,.12)';   statusColor='#639922'; label='▲ Favoured'; }
+      else if (loses >= 2) { bg='rgba(226,75,74,.10)';   statusColor='#E24B4A'; label='▼ Weak'; }
+      else { bg=''; statusColor='#888780'; label='● Neutral'; }
  
       const cell = document.createElement('div');
       cell.className = 'matchup-cell';
-      cell.style.background = bg;
+      if (bg) cell.style.background = bg;
       cell.innerHTML = `
-        <span class="el-name" style="color:${EL_COLOR[enemy]}">${EL_EMOJI[enemy]} ${enemy}</span>
+        <span class="el-name" style="color:${EL_HEX[enemy]}">${EL_EMOJI[enemy]} ${enemy}</span>
         <span class="el-status" style="color:${statusColor}">${label}</span>`;
       grid.appendChild(cell);
     });
@@ -369,38 +337,42 @@
   function renderDmgGrid() {
     const grid = document.getElementById('dmg-grid');
     grid.innerHTML = '';
- 
-    SLOTS.forEach((slotName, si) => {
+    SLOTS.forEach((name, si) => {
       const el = chosen[si];
       const card = document.createElement('div');
       card.className = 'dmg-card';
- 
       if (!el) {
-        card.innerHTML = `<div class="weapon">${slotName}</div><div class="element" style="color:var(--text3)">no element</div>`;
+        card.innerHTML = `<div class="dmg-weapon">${name}</div><div class="dmg-element" style="color:#5e5c72">no element</div>`;
       } else {
-        const rows = ELEMENTS.map(enemy => {
-          const m = getDmgMult(el, enemy);
-          return `<div class="mult-row">
-            <span class="mult-label">${EL_EMOJI[enemy]} ${enemy}</span>
-            <span class="mult-val" style="color:${m.color}">×${m.mult.toFixed(1)}</span>
-          </div>`;
-        }).join('');
         card.innerHTML = `
-          <div class="weapon">${slotName}</div>
-          <div class="element" style="color:${EL_COLOR[el]}">${EL_EMOJI[el]} ${el}</div>
-          <div class="mults">${rows}</div>`;
+          <div class="dmg-weapon">${name}</div>
+          <div class="dmg-element" style="color:${EL_HEX[el]}">${EL_EMOJI[el]} ${el}</div>
+          <div>${ELEMENTS.map(enemy => {
+            const m = getDmgMult(el, enemy);
+            return `<div class="mult-row">
+              <span class="mult-label">${EL_EMOJI[enemy]} ${enemy}</span>
+              <span class="mult-val" style="color:${m.color}">×${m.mult.toFixed(1)}</span>
+            </div>`;
+          }).join('')}</div>`;
       }
       grid.appendChild(card);
     });
   }
  
-  function update() {
-    renderSlots();
-    renderSynergy();
-    renderMatchup();
-    renderDmgGrid();
+  function renderRef() {
+    document.getElementById('ref-grid').innerHTML = [
+      ['💧 Water','🔥 Fire'],['🔥 Fire','🌪️ Wind'],
+      ['🌪️ Wind','🪨 Earth'],['🪨 Earth','💧 Water'],
+      ['✨ Light','🌑 Dark'], ['🌑 Dark','✨ Light'],
+    ].map(([a,b]) => `
+      <div class="ref-row">
+        <span>${a}</span><span class="ref-beats">beats</span><span class="ref-loser">${b}</span>
+      </div>`).join('');
   }
  
+  function update() { renderSlots(); renderSynergy(); renderMatchup(); renderDmgGrid(); }
+ 
+  renderRef();
   update();
 </script>
 </body>
